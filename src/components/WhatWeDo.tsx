@@ -28,7 +28,7 @@ export default function WhatWeDo() {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-gray-50 border-y border-gray-200 text-center">
+    <section className="py-20 px-4 sm:px-8 bg-gray-50 border-y border-gray-200 text-center text-gray-900">
       <h2 className="text-2xl font-semibold mb-8">What We Do</h2>
 
       {/* flex-wrap으로 감싸고 justify-center로 가운데 정렬 */}
@@ -36,7 +36,6 @@ export default function WhatWeDo() {
         {programs.map((p, i) => (
           <div
             key={i}
-            /* w-full(모바일), sm:w-1/2(작은 화면 2열), lg:w-1/3(큰 화면 3열) */
             className="p-4 w-full sm:w-1/2 lg:w-1/3 max-w-xs rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col items-center"
           >
             <img
@@ -44,7 +43,9 @@ export default function WhatWeDo() {
               alt={p.title}
               className="h-40 w-full object-cover rounded-lg mb-3"
             />
-            <h3 className="font-semibold mb-2 text-lg">{p.title}</h3>
+            <h3 className="font-semibold mb-2 text-lg text-gray-900">
+              {p.title}
+            </h3>
             <p className="text-gray-700 text-sm">{p.desc}</p>
           </div>
         ))}

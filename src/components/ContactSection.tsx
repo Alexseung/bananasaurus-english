@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function ContactSection() {
   const [name, setName] = useState("");
@@ -17,17 +18,19 @@ export default function ContactSection() {
       return;
     }
 
-    const { error } = await supabase
-      .from("inquiry_list")
-      .insert([{ name, email_or_phone: contact }]);
+    try {
+      await addDoc(collection(db, "inquiry_list"), {
+        name,
+        email_or_phone: contact,
+        created_at: new Date(),
+      });
 
-    if (error) {
-      console.error(error);
-      setError("제출 중 오류가 발생했습니다.");
-    } else {
       setSuccess(true);
       setName("");
       setContact("");
+    } catch (err) {
+      console.error(err);
+      setError("제출 중 오류가 발생했습니다.");
     }
   };
 
@@ -61,7 +64,7 @@ export default function ContactSection() {
 
         <button
           type="submit"
-          className="py-3 rounded-lg bg-pink-500 hover:bg-pink-600 text-black transition"
+          className="py-3 rounded-lg bg-pink-400 hover:bg-pink-500 text-black transition"
         >
           신청하기
         </button>
