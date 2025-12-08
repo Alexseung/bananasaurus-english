@@ -25,36 +25,34 @@ export default function NavBar() {
           : "relative"
       }`}
     >
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="px-3 py-2 rounded"
-      >
-        Home
-      </button>
-      <button
-        onClick={() => handleScrollTo("about")}
-        className="px-3 py-2 rounded"
-      >
-        About
-      </button>
-      <button
-        onClick={() => handleScrollTo("programs")}
-        className="px-3 py-2 rounded"
-      >
-        Programs
-      </button>
-      <button
-        onClick={() => handleScrollTo("testimonials")}
-        className="px-3 py-2 rounded"
-      >
-        Reviews
-      </button>
-      <button
-        onClick={() => handleScrollTo("contact")}
-        className="px-3 py-2 rounded"
-      >
-        Contact
-      </button>
+      {[
+        {
+          label: "Home",
+          action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
+        },
+        { label: "About", action: () => handleScrollTo("about") },
+        { label: "Programs", action: () => handleScrollTo("programs") },
+        { label: "Reviews", action: () => handleScrollTo("testimonials") },
+        { label: "Contact", action: () => handleScrollTo("contact") },
+      ].map((item) => (
+        <button
+          key={item.label}
+          onClick={item.action}
+          className="
+    px-3 py-2 rounded-md 
+    text-gray-700 
+    border border-transparent
+    transition 
+    hover:bg-gray-100
+    hover:text-gray-900
+    hover:border-gray-300 
+    focus:outline-none
+    focus:ring-2 focus:ring-gray-400
+  "
+        >
+          {item.label}
+        </button>
+      ))}
     </nav>
   );
 }
