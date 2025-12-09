@@ -28,7 +28,7 @@ export default function WhatWeDo() {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-gray-50 border-y border-gray-200 text-center text-gray-900">
+    <section className="py-10 px-4 sm:px-8 bg-gray-50 border-y border-gray-200 text-center text-gray-900">
       <h2 className="text-2xl font-semibold mb-8">What We Do</h2>
 
       {/* flex-wrap으로 감싸고 justify-center로 가운데 정렬 */}

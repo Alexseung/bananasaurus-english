@@ -18,6 +18,17 @@ export default function ContactSection() {
       return;
     }
 
+    // 이메일 & 전화번호 정규식
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
+
+    const isValidContact = emailRegex.test(contact) || phoneRegex.test(contact);
+
+    if (!isValidContact) {
+      setError("올바른 이메일 또는 전화번호를 입력해주세요.");
+      return;
+    }
+
     try {
       await addDoc(collection(db, "inquiry_list"), {
         name,

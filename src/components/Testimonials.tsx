@@ -11,7 +11,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="py-20 px-8 bg-white border-b border-gray-200 text-center">
+    <section className="py-10 px-8 bg-white border-b border-gray-200 text-center">
       <h2 className="text-2xl font-semibold mb-8">What Parents Say</h2>
       <div className="grid md:grid-cols-2 gap-8">
         {reviews.map((item, i) => (
