@@ -45,7 +45,8 @@ export default function NavBar() {
     transition 
     hover:bg-gray-100
     hover:text-gray-900
-    hover:border-gray-300 
+    hover:border-gray-300
+    hover:cursor-pointer
     focus:outline-none
     focus:ring-2 focus:ring-gray-400
   "
