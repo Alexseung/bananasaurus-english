@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Testimonials() {
   const reviews = [
@@ -11,28 +11,59 @@ export default function Testimonials() {
     },
     {
       quote:
-        "영어를 처음 접하는 아이들이었는데 미술, 체육, 요리 등 다양한 액티비티로 아이들이 정말 즐겁게 참여했어요. 아이 눈높이에 맞춘 수업 덕분에 외국인에 대한 거부감도 전혀 없었습니다.",
+        "영어를 처음 접하는 아이들이었는데 미술, 체육, 요리 등 다양한 액티비티로 아이들이 정말 즐겁게 참여했어요.",
       name: "6살 · 7살 아이 엄마",
     },
     {
       quote:
-        "아이가 부끄러움이 많은 편인데, 항상 밝고 재미있게 수업해 주셔서 영어를 좋아하게 되었어요. 준비도 꼼꼼하시고 약속도 잘 지키셔서 엄마로서 신뢰가 갔습니다.",
+        "아이가 부끄러움이 많은 편인데, 항상 밝고 재미있게 수업해 주셔서 영어를 좋아하게 되었어요.",
       name: "7살 아들 엄마",
     },
   ];
 
   const [index, setIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   const prev = () =>
     setIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+
   const next = () =>
     setIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+
+  // 손가락 닿았을 때
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  // 손가락 뗐을 때
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    // 최소 이동 거리 (스크롤 방지)
+    const threshold = 50;
+
+    if (diff > threshold) {
+      next(); // 왼쪽으로 밀기 → 다음
+    } else if (diff < -threshold) {
+      prev(); // 오른쪽으로 밀기 → 이전
+    }
+
+    touchStartX.current = null;
+  };
 
   return (
     <section className="py-12 px-6 bg-white border-b border-gray-200 text-center">
       <h2 className="text-2xl font-semibold mb-6">What Parents Say</h2>
 
-      <div className="relative max-w-2xl mx-auto">
+      <div
+        className="relative max-w-2xl mx-auto"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Review Card */}
         <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-sm min-h-[220px] flex flex-col justify-between">
           <p className="text-gray-800 leading-relaxed">
             “{reviews[index].quote}”
@@ -51,7 +82,6 @@ export default function Testimonials() {
             ←
           </button>
 
-          {/* Dots */}
           <div className="flex gap-2">
             {reviews.map((_, i) => (
               <span
